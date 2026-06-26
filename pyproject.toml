@@ -1,0 +1,29 @@
+[project]
+name = "pd-doc-pipeline"
+version = "0.1.0"
+description = "Liest Rechnungen/Angebote aus PDFs aus, validiert sie und erzeugt einen Antwort-Entwurf."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pdfplumber>=0.11",
+    "pypdf>=5.0",
+    "anthropic>=0.40",
+    "pydantic>=2.0",
+    "python-dotenv>=1.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "reportlab>=4.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

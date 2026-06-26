@@ -35,3 +35,10 @@ coverage/
 
 # Vercel
 .vercel
+
+# Generierte Daten und Ausgaben — Ordner behalten, Inhalte ignorieren
+# (data/samples/ mit den echten Beleg-PDFs ist davon mit abgedeckt)
+data/*
+!data/.gitkeep
+out/*
+!out/.gitkeep
