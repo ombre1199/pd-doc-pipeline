@@ -36,7 +36,7 @@ def draft(record: Record, *, out_dir: str | Path = "out") -> str:
 
     directory = Path(out_dir)
     directory.mkdir(parents=True, exist_ok=True)
-    path = directory / _draft_filename(record)
+    path = directory / draft_filename(record)
     path.write_text(text, encoding="utf-8")
 
     return text
@@ -123,7 +123,7 @@ def _include_conditions_enabled() -> bool:
     return raw.strip().lower() in {"true", "1", "yes", "ja"}
 
 
-def _draft_filename(record: Record) -> str:
+def draft_filename(record: Record) -> str:
     """Build a filesystem-safe .md filename from document number + vendor."""
     stem = f"{record.document_number.value}_{record.vendor_name.value}"
     safe = re.sub(r"[^A-Za-z0-9._-]+", "_", stem).strip("_")

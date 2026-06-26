@@ -17,7 +17,7 @@ CLI bekommt einen PDF-Pfad → Modul `extract` liest den Text (Textebene; kein T
 - [x] `validate`: Typen + Plausibilität + `needs_review`-Flags
 - [x] `store`: Duplikat-Check, Append in jsonl + csv
 - [x] `draft`: Antwort-Entwurf generieren (deutsch)
-- [ ] CLI verdrahten (`python -m src.main <pfad.pdf>`)
+- [x] CLI verdrahten (`python -m src.main <pfad.pdf>`)
 - [ ] Tests mit 5 Beispiel-PDFs + 1 unklarem + 1 gescannten
 - [ ] README mit Setup + Beispiel aktualisieren
 - [ ] Demo-GIF: PDF rein → Datensatz + Entwurf raus
