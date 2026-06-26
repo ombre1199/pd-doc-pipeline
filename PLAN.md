@@ -12,7 +12,7 @@ CLI bekommt einen PDF-Pfad → Modul `extract` liest den Text (Textebene; kein T
 ## Aufgaben
 - [x] uv-Projekt aufsetzen (`pyproject.toml`, `src/`, `tests/`, `data/`, `out/`)
 - [x] Pydantic-Modelle für Datensatz + Feld-Confidence definieren
-- [ ] `extract`: PDF-Text auslesen, „kein Text"-Fall behandeln
+- [x] `extract`: PDF-Text auslesen, „kein Text"-Fall behandeln
 - [ ] `classify_extract`: Claude-Call mit JSON-Schema, strukturierter Output
 - [ ] `validate`: Typen + Plausibilität + `needs_review`-Flags
 - [ ] `store`: Duplikat-Check, Append in jsonl + csv
