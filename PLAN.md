@@ -14,7 +14,7 @@ CLI bekommt einen PDF-Pfad → Modul `extract` liest den Text (Textebene; kein T
 - [x] Pydantic-Modelle für Datensatz + Feld-Confidence definieren
 - [x] `extract`: PDF-Text auslesen, „kein Text"-Fall behandeln
 - [x] `classify_extract`: Claude-Call mit JSON-Schema, strukturierter Output
-- [ ] `validate`: Typen + Plausibilität + `needs_review`-Flags
+- [x] `validate`: Typen + Plausibilität + `needs_review`-Flags
 - [ ] `store`: Duplikat-Check, Append in jsonl + csv
 - [ ] `draft`: Antwort-Entwurf generieren (deutsch)
 - [ ] CLI verdrahten (`python -m src.main <pfad.pdf>`)
