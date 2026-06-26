@@ -1,22 +1,26 @@
-# PLAN.md — Bauplan
-
-> Aus der SPEC abgeleitet. Claude Code arbeitet diese Liste der Reihe nach ab und hakt ab.
+# PLAN.md — Dokument-zu-Aktion-Pipeline
 
 ## Architektur (kurz)
-Datenfluss in 2–4 Sätzen: Was passiert von Input bis Output?
+CLI bekommt einen PDF-Pfad → Modul `extract` liest den Text (Textebene; kein Text → sauber abbrechen) → Modul `classify_extract` schickt Text + JSON-Schema an die Claude API und bekommt strukturierte Felder mit Confidence zurück → Modul `validate` prüft Typen und Plausibilität (`net + vat ≈ gross`) und setzt `needs_review`-Flags → Modul `store` prüft auf Duplikat und hängt an `records.jsonl` + `records.csv` an → Modul `draft` erzeugt den Antwort-Entwurf. Alles wird in der Konsole zusammengefasst.
 
 ## Risiken & Annahmen
-- Risiko: ... → Gegenmaßnahme: ...
-- Annahme: ...
+- **Gescanntes PDF ohne Textebene** → Gegenmaßnahme: erkennen und mit klarer Meldung abweisen (OCR ist out of scope).
+- **Falsche Extraktion** → Gegenmaßnahme: Confidence-Schwelle + Plausibilitätsprüfung + `needs_review` statt blindem Speichern.
+- **Doppelte Verarbeitung** → Gegenmaßnahme: Idempotenz über `vendor_name + document_number`.
+- **Annahme:** Test-PDFs sind echte, deutschsprachige Rechnungen/Angebote mit Textebene.
 
 ## Aufgaben
-- [ ] Projekt-Gerüst + Abhängigkeiten
-- [ ] Kernfunktion 1: ...
-- [ ] Kernfunktion 2: ...
-- [ ] Fehlerbehandlung & Edge Cases
-- [ ] Tests
-- [ ] README aktualisieren
-- [ ] Demo-Material (GIF/Screenshot) erstellen
+- [x] uv-Projekt aufsetzen (`pyproject.toml`, `src/`, `tests/`, `data/`, `out/`)
+- [ ] Pydantic-Modelle für Datensatz + Feld-Confidence definieren
+- [ ] `extract`: PDF-Text auslesen, „kein Text"-Fall behandeln
+- [ ] `classify_extract`: Claude-Call mit JSON-Schema, strukturierter Output
+- [ ] `validate`: Typen + Plausibilität + `needs_review`-Flags
+- [ ] `store`: Duplikat-Check, Append in jsonl + csv
+- [ ] `draft`: Antwort-Entwurf generieren (deutsch)
+- [ ] CLI verdrahten (`python -m src.main <pfad.pdf>`)
+- [ ] Tests mit 5 Beispiel-PDFs + 1 unklarem + 1 gescannten
+- [ ] README mit Setup + Beispiel aktualisieren
+- [ ] Demo-GIF: PDF rein → Datensatz + Entwurf raus
 
 ## Definition of Done
-Alle Aufgaben abgehakt, Tests grün, README aktuell, sauber gepusht.
+Alle Aufgaben abgehakt, `pytest` grün, README aktuell, sauber gepusht. Erfolgskriterien aus der SPEC erfüllt.

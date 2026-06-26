@@ -3,13 +3,13 @@
 > Diese Datei liest Claude Code beim Start automatisch. Sie definiert, wie in diesem Repo gearbeitet wird. Pro Projekt nur die Abschnitte „Projekt" und „Stack" anpassen — der Rest bleibt.
 
 ## Projekt
-- **Name:** <projektname>
-- **Was es tut:** <ein Satz>
+- **Name:** pd-doc-pipeline
+- **Was es tut:** Liest Rechnungen/Angebote aus PDFs aus, validiert sie und erzeugt einen Antwort-Entwurf.
 - **Owner:** Raphael, platzhirschdigital.at (Solo, Österreich)
 - Vollständige Anforderungen stehen in `SPEC.md`, der Bauplan in `PLAN.md`. Lies beide, bevor du Code schreibst.
 
 ## Stack
-- <Sprache/Framework hier eintragen, z.B. Node 20 + TypeScript, oder Python 3.12>
+- Python 3.12 + uv, pdfplumber, anthropic SDK, pydantic, pytest
 - Claude API für KI-Funktionen (Key liegt in `.env`, siehe `.env.example`)
 - Paketmanager: pnpm (JS) bzw. uv (Python)
 
