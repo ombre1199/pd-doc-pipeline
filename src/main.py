@@ -22,7 +22,7 @@ from src.classify_extract import ClassifyError, classify_extract
 from src.draft import draft, draft_filename
 from src.extract import NoTextLayerError, extract_text
 from src.models import Confident, Record
-from src.store import store
+from src.store import store, stored_source_files
 from src.validate import validate
 
 _DOC_TYPE_LABEL = {"rechnung": "Rechnung", "angebot": "Angebot"}
@@ -32,9 +32,13 @@ _DOC_TYPE_LABEL = {"rechnung": "Rechnung", "angebot": "Angebot"}
 class PipelineResult:
     """Outcome of one pipeline run."""
 
-    record: Record
-    stored: bool
-    draft_path: Path
+    source: str
+    record: Record | None = None
+    stored: bool = False
+    draft_path: Path | None = None
+    # True if the file was recognised as already processed and the whole
+    # pipeline (including the paid Claude call) was skipped.
+    skipped_existing: bool = False
 
 
 def run_pipeline(
@@ -49,8 +53,16 @@ def run_pipeline(
     A custom *client* can be injected so tests run offline. Raises the
     pipeline's own exceptions (NoTextLayerError, ClassifyError, ...) for the
     caller to translate into user-facing messages.
+
+    If the exact same file was already processed, the pipeline returns early
+    (skipped_existing=True) without calling the Claude API. The authoritative
+    idempotency on vendor_name + document_number still runs in store() for
+    the same invoice arriving as a different file.
     """
-    source = str(pdf_path)
+    source = str(Path(pdf_path).resolve())
+
+    if source in stored_source_files(data_dir):
+        return PipelineResult(source=source, skipped_existing=True)
 
     text = extract_text(pdf_path)
     record = classify_extract(text, source, client=client)
@@ -59,6 +71,7 @@ def run_pipeline(
     draft(record, out_dir=out_dir)
 
     return PipelineResult(
+        source=source,
         record=record,
         stored=stored,
         draft_path=Path(out_dir) / draft_filename(record),
@@ -124,7 +137,13 @@ def main(argv: list[str] | None = None) -> int:
 
 def _print_summary(result: PipelineResult) -> None:
     """Print the German console summary for a finished run."""
+    if result.skipped_existing:
+        print(f"\nBeleg bereits verarbeitet: {result.source}")
+        print("  Übersprungen — kein Claude-Aufruf, kein neuer Datensatz.")
+        return
+
     record = result.record
+    assert record is not None  # only None when skipped_existing
     doc_type = _DOC_TYPE_LABEL.get(
         record.doc_type.value.value, record.doc_type.value.value
     )

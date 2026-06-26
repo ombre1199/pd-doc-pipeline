@@ -74,6 +74,32 @@ def test_run_pipeline_is_idempotent(tmp_path):
     assert len(lines) == 1
 
 
+class _ExplodingClient:
+    """A client whose use fails the test — proves no API call was made."""
+
+    class _Messages:
+        def create(self, **kwargs):
+            raise AssertionError("Claude API wurde trotz Duplikat aufgerufen")
+
+    messages = _Messages()
+
+
+def test_rerun_same_file_skips_api_call(tmp_path):
+    pdf = FIXTURES / "rechnung_01_buerobedarf.pdf"
+    data_dir = tmp_path / "data"
+    out_dir = tmp_path / "out"
+
+    first = run_pipeline(pdf, client=_FakeClient(_payload()), data_dir=data_dir, out_dir=out_dir)
+    assert first.stored is True
+
+    # The second run must short-circuit before touching the (exploding) client.
+    second = run_pipeline(pdf, client=_ExplodingClient(), data_dir=data_dir, out_dir=out_dir)
+
+    assert second.skipped_existing is True
+    assert second.stored is False
+    assert second.record is None
+
+
 def test_scanned_pdf_raises_no_text_layer(tmp_path):
     from src.extract import NoTextLayerError
 

@@ -58,6 +58,30 @@ def store(record: Record, *, data_dir: str | Path = "data") -> bool:
     return True
 
 
+def stored_source_files(data_dir: str | Path = "data") -> set[str]:
+    """Return the set of source_file paths already present in the JSONL store.
+
+    Used for a cheap early-out: a file that was already ingested can be
+    skipped before the (paid) Claude call. The authoritative idempotency on
+    vendor_name + document_number still happens in store().
+    """
+    jsonl_path = Path(data_dir) / JSONL_NAME
+    sources: set[str] = set()
+    if not jsonl_path.exists():
+        return sources
+
+    with jsonl_path.open(encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            data = json.loads(line)
+            source = data.get("source_file")
+            if source:
+                sources.add(source)
+    return sources
+
+
 def _norm_key(vendor: str, number: str) -> tuple[str, str]:
     """Normalize the idempotency key (case- and whitespace-insensitive)."""
     return (vendor.strip().casefold(), number.strip().casefold())

@@ -43,6 +43,11 @@ Die CLI verarbeitet ein PDF in fünf Schritten:
 Claude) → `validate` (Typen, Plausibilität, Confidence) → `store` (Duplikat-Check)
 → `draft` (Antwort-Entwurf).
 
+**Idempotenz:** Wird dieselbe Datei erneut übergeben, bricht die Pipeline früh
+ab (kein Claude-Aufruf, keine Kosten). Kommt dieselbe Rechnung als andere Datei
+herein, greift zusätzlich der Duplikat-Check auf `vendor_name + document_number`
+in `store`.
+
 Erzeugt werden dabei:
 - `data/records.jsonl` — vollständiger Datensatz je Beleg (eine JSON-Zeile)
 - `data/records.csv` — dieselben Daten flach, zum Öffnen in Excel (UTF-8 mit BOM, Semikolon-Trenner)
