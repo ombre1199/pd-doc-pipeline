@@ -1,0 +1,37 @@
+# Secrets — NIEMALS committen
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+
+# Node
+node_modules/
+dist/
+build/
+.next/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.uv/
+*.egg-info/
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Test / Coverage
+.coverage
+coverage/
+.pytest_cache/
+
+# Vercel
+.vercel
