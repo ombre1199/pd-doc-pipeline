@@ -202,6 +202,8 @@ Vervollständige die Tests gegen die Erfolgskriterien aus SPEC.md:
 - Das gescannte PDF wird sauber abgewiesen.
 
 Stelle sicher: `pytest` ist komplett grün. Zeig mir die Test-Ausgabe.
+
+Zusätzlich (manuell, NICHT Teil der pytest-Suite): ein echter Smoke-Test — ein reales Fixture-PDF über die CLI mit echtem API-Call laufen lassen und prüfen, ob die Kernfelder stimmen. Vorher um Bestätigung fragen (echter Netzwerk-Call, Kosten < 1 Cent). Ergebnis kurz festhalten.
 Committe mit 'test: Erfolgskriterien aus SPEC abgedeckt'.
 ```
 

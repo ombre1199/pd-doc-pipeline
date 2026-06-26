@@ -100,7 +100,7 @@ Die Tests laufen offline und deterministisch (der Claude-Call wird gemockt).
 Für eine kurze Demo den CLI-Aufruf mit einem Terminal-Recorder aufnehmen
 (z.B. [`asciinema`](https://asciinema.org/) oder ein Bildschirm-Recorder):
 PDF rein → Konsolen-Zusammenfassung + erzeugter Entwurf raus. Das Ergebnis als
-`docs/demo.gif` ablegen und hier einbinden.
+`docs/demo.gif` ablegen und hier einbinden. Demo wurde als Screenshot gespeichert
 
 ## Status
 MVP fertig — alle Erfolgskriterien aus `SPEC.md` abgedeckt. Bauplan: `PLAN.md`,

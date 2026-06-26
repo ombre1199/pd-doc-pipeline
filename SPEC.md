@@ -44,6 +44,7 @@ Solo-/KMU-Inhaber:innen (kaufmännisch, nicht technisch). Sie werfen ein PDF rei
 - **Validierung:** `pydantic`
 - **Speicher:** lokal — `data/records.jsonl` + `data/records.csv`
 - **Tests:** `pytest`
+- **Confidence** Positionen tragen keine eigene Confidence; Plausibilität wird über die Summen abgesichert.
 
 ## Offene Fragen
 - Soll der Antwort-Entwurf nur „Eingang bestätigt" sein oder gleich auf Zahlungsziel/Konditionen eingehen? (Default: schlichte Eingangsbestätigung.)
