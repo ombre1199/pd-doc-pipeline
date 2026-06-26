@@ -30,7 +30,7 @@ def validate(record: Record, *, threshold: float | None = None) -> Record:
 
     Mutates and returns *record*: sets needs_review and fills review_reasons.
     """
-    threshold = _resolve_threshold(threshold)
+    threshold = resolve_threshold(threshold)
 
     reasons = _low_confidence_reasons(record, threshold)
     reasons += _plausibility_reasons(record)
@@ -40,7 +40,7 @@ def validate(record: Record, *, threshold: float | None = None) -> Record:
     return record
 
 
-def _resolve_threshold(threshold: float | None) -> float:
+def resolve_threshold(threshold: float | None) -> float:
     """Pick the threshold: explicit arg > CONFIDENCE_THRESHOLD env > default."""
     if threshold is not None:
         return threshold

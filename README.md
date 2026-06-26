@@ -4,9 +4,10 @@ Ein Showcase-Projekt von [platzhirschdigital.at](https://platzhirschdigital.at).
 
 ## Was es macht
 Liest Rechnungen und Angebote aus PDFs aus, validiert die Daten (Typen,
-Plausibilität, Confidence) und erzeugt einen deutschen Antwort-Entwurf.
-Unklare oder unplausible Belege werden als `needs_review` geflaggt statt
-still übernommen (Human-in-the-Loop).
+Plausibilität, Confidence) und erzeugt einen deutschen Antwort-Entwurf als
+Markdown-Datei unter `out/`. Unklare oder unplausible Belege werden als
+`needs_review` geflaggt statt still übernommen (Human-in-the-Loop) — der
+Entwurf trägt dann einen sichtbaren Prüf-Hinweis.
 
 ## Tech
 - Python 3.12, Paketmanager [`uv`](https://docs.astral.sh/uv/)
